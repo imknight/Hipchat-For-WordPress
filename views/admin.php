@@ -41,7 +41,7 @@
         <td>
           <input name="room" type="text" id="room" value="<?php echo $room ?>" class="regular-text">
           <span class="description">
-            Name of the room to send messages to.
+            Name of the room to send messages to test your API token.
           </span>
         </td>
       </tr>
@@ -59,7 +59,7 @@
         <td>
           <input name="post_types_notify_room" type="text" value="<?php echo $selectedroom ?>" class="regular-text">
           <span class="description">
-            Name of the room to send messages to.
+            Name of the room to send messages to for this post type.
           </span>
         </td>
       </tr>
