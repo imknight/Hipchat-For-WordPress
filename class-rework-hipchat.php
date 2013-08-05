@@ -45,8 +45,7 @@ class Rework_Hipchat {
 	public static function deactivate( $network_wide ) {
 		delete_option('hipchat_auth_token');
 		delete_option('hipchat_room');
-		delete_option('hipchat_post_type');
-		delete_option('hipchat_post_type_room');
+		delete_option('hipchat_notify');
 	}
 
 	public function load_plugin_textdomain() {
