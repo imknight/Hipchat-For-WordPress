@@ -8,13 +8,13 @@
   <div id="icon-settings-hipchat" class="icon32"><br/></div>
   <h2>HipChat For WordPress Plugin Settings</h2>
 
-  <p>This plugin will send a HipChat message whenever a new content is published.</p>
+  <p>This plugin will send a HipChat message whenever a new content is published. Please Generate "Notification" type of HipChat API</p>
 
-  <?php if ($updated): ?>
+  <?php if ( $updated ): ?>
   <div class="updated"><p><?php echo $updated ?></p></div>
   <?php endif; ?>
 
-  <?php if ($error): ?>
+  <?php if ( $error ): ?>
   <div class="error"><p><?php echo $error ?></p></div>
   <?php endif; ?>
 
@@ -45,16 +45,16 @@
           </span>
         </td>
       </tr>
-
+      <?php if(!empty($auth_token)) :?>
       <tr>
         <th>
           <label for="room_name">Post Types</label>
           <select name="post_types_notify">
-          <?php foreach ($post_types  as $post_type ) :?>
-          <option value="<?php echo $post_type ?> <?php echo ($post_type==$selected) ? 'selected':''?>"><?php echo ucfirst($post_type); ?></option>
+          <?php foreach ( $post_types  as $post_type ) :?>
+          <option value="<?php echo $post_type ?> <?php echo ( $post_type==$selected ) ? 'selected':''?>"><?php echo ucfirst( $post_type ); ?></option>
           <?php endforeach ?>
           </select>
- 
+
         </th>
         <td>
           <input name="post_types_notify_room" type="text" value="<?php echo $selectedroom ?>" class="regular-text">
@@ -63,7 +63,7 @@
           </span>
         </td>
       </tr>
-
+    <?php endif; ?>
     </table>
     <p class="submit">
       <input type="submit" name="Submit" class="button-primary"
