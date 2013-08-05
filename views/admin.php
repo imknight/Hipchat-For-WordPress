@@ -48,34 +48,38 @@
     </table>
 <br>
 <?php if ( !empty( $auth_token ) ) :?>
-  <div style="width:50%">
+  <div style="width:60%">
    <table id="notifytable" class="widefat" width="100%">
     <tbody>
     <tr>
       <th>Post Type</th>
-      <th colspan="2" width="70%">Message</th>
+      <th colspan="2" width="70%">Message ( customize the message example add @all to notify everyone ) <a class="button" id="add-row" href="#">+</a></th>
     </tr>
-  <tr>
-    <td>
-        <select name="notify_type[]" class="widefat">
-          <?php foreach ( $post_types  as $post_type ) :?>
-            <option value="<?php echo $post_type ?> <?php echo ( $post_type==$selected ) ? 'selected':''?>"><?php echo ucfirst( $post_type ); ?></option>
-          <?php endforeach ?>
-        </select>
-    </td>
-    <td><input type="text" name="notify_msg[]" value="" class="widefat" /></td>
-    <td><a class="button" id="add-row" href="#">+</a></td>
-  </tr>
+  <?php if(!empty($notify)) :?>
+    <?php foreach ($notify['post_type'] as $i => $type ) : ?>
+    <tr>
+      <td>
+          <select name="notify_type[]" class="widefat">
+            <?php foreach ( $post_types  as $post_type ) :?>
+              <option value="<?php echo $post_type ?>" <?php echo ($post_type==$type) ? 'SELECTED':''?>><?php echo ucfirst( $post_type ); ?></option>
+            <?php endforeach ?>
+          </select>
+      </td>
+      <td><input type="text" name="notify_msg[]" value="<?php echo $notify['post_msg'][$i]?>" class="widefat" /></td>
+      <td><a class="button remove-row" href="#">-</a></td>
+    </tr>
+    <?php endforeach; ?>
+  <?php endif; ?>
 
   <tr class="empty-row screen-reader-text">
     <td>
         <select name="notify_type[]" class="widefat">
           <?php foreach ( $post_types  as $post_type ) :?>
-            <option value="<?php echo $post_type ?> <?php echo ( $post_type==$selected ) ? 'selected':''?>"><?php echo ucfirst( $post_type ); ?></option>
+            <option value="<?php echo $post_type ?>"><?php echo ucfirst( $post_type ); ?></option>
           <?php endforeach ?>
         </select>
     </td>
-    <td><input type="text" name="notify_msg[]" value="" class="widefat" /></td>
+    <td><input type="text" name="notify_msg[]" value="%title% is added" class="widefat" /></td>
     <td><a class="button remove-row" href="#">-</a></td>
   </tr>
   </tbody>

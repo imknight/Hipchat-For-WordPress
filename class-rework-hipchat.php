@@ -120,14 +120,27 @@ class Rework_Hipchat {
 		$error = null;
 
 		if ($_POST) {
-		$auth_token = trim($_POST['auth_token']);
-		$room = trim($_POST['room']);
-		$selected = trim($_POST['post_types_notify']);
-		$selectedroom = trim($_POST['post_types_notify_room']);
+		$auth_token = esc_attr(trim($_POST['auth_token']));
+		$room = esc_attr(($_POST['room']));
+
+		$notify = array();
+
+		//remove the last item since is use for clone purpose only
+		array_pop($_POST['notify_type']);
+		array_pop($_POST['notify_msg']); 
+
+		foreach ($_POST['notify_type'] as $type){
+			if (!empty($type))$notify['post_type'][]=esc_attr($type);
+		}
+		foreach ($_POST['notify_msg'] as $msg){
+			if (!empty($msg))$notify['post_msg'][]=esc_attr($msg);
+		}		
+
 		
-		$auth_token = get_option('hipchat_auth_token');
-		
-		if(isset($auth_token)){
+		if(get_option('hipchat_auth_token')){
+			$successful = true;
+		}else{
+			echo "Test";exit;
 		// make sure token is valid and room exists
 			$hc = new HipChat($auth_token);
 			$successful = false;
@@ -138,8 +151,8 @@ class Rework_Hipchat {
 			  }
 			} catch (HipChat_Exception $e) {
 			  // token must have failed	
-		}
-			$successful = true;
+			}
+		
 		}
 			if (!$successful) {
 				$error = 'Bad auth token or room name.';
@@ -150,16 +163,15 @@ class Rework_Hipchat {
 		    } else {
 				update_option('hipchat_auth_token', $auth_token);
 				update_option('hipchat_room', $room);
-				update_option('hipchat_post_type', $selected);
-				update_option('hipchat_post_type_room', $selectedroom);
+				update_option('hipchat_notify', $notify);
 				$updated = 'Settings saved! Auth token is valid and room exists.';
 			}
 		}else{
 			$auth_token = get_option('hipchat_auth_token');
     		$room = get_option('hipchat_room');
-    		$selected = get_option('hipchat_post_type');
-    		$selectedroom = get_option('hipchat_post_type_room');
+    		$notify = get_option('hipchat_notify');
 		}
+
 		$args=array(
 		'public'   => true,
 		'_builtin' => false
