@@ -135,11 +135,10 @@ class Rework_Hipchat {
 			if (!empty($msg))$notify['post_msg'][]=esc_attr($msg);
 		}		
 
-		
+		//if auth already set no need to keep ping hipchat
 		if(get_option('hipchat_auth_token')){
 			$successful = true;
 		}else{
-			echo "Test";exit;
 		// make sure token is valid and room exists
 			$hc = new HipChat($auth_token);
 			$successful = false;
@@ -182,7 +181,16 @@ class Rework_Hipchat {
 	}
 
 	public function publish_notification($post){
-		if ($post->post_type==get_option('hipchat_post_type'))
+		$notify = get_option('hipchat_notify');
+		$ping = false;
+		foreach ($notify['post_type'] as $i => $type){
+			if ($type==$post->post_type){
+				$ping = true;
+				$msg = $notify['post_msg'][$i];
+			}
+		}
+
+		if ($ping){
 			include_once( 'lib/Hipchat.php' );
 			try {
 			$auth_token = get_option('hipchat_auth_token');
@@ -194,7 +202,7 @@ class Rework_Hipchat {
 
 			$room = get_option('hipchat_room');
 
-			$message = '['.$post->post_type.'] '.$post->post_title.' added';
+			$message = str_replace('%title%',$post->post_title,$msg);
 			$hc = new HipChat($auth_token);
 			$r = $hc->message_room($room, get_bloginfo('name'), $message);
 
@@ -206,6 +214,7 @@ class Rework_Hipchat {
 			}
 			
 		return $post;
+		}
 	}
 
 }

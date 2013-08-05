@@ -53,7 +53,8 @@
     <tbody>
     <tr>
       <th>Post Type</th>
-      <th colspan="2" width="70%">Message ( customize the message example add @all to notify everyone ) <a class="button" id="add-row" href="#">+</a></th>
+      <th width="70%">Message ( customize the message ) </th>
+      <th><a class="button" id="add-row" href="#">+</a></th>
     </tr>
   <?php if(!empty($notify)) :?>
     <?php foreach ($notify['post_type'] as $i => $type ) : ?>
