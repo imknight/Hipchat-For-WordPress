@@ -3,7 +3,7 @@ class Rework_Hipchat {
 
 	protected $version = '1.0.0';
 	protected $plugin_slug = 'rework-hipchat';
-	protected $title = 'Rework Hipchat';
+	protected $title = 'Rework HipChat';
 	protected static $instance = null;
 	protected $plugin_screen_hook_suffix = null;
 

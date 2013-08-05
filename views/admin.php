@@ -6,9 +6,9 @@
 
 <div class="wrap">
   <div id="icon-settings-hipchat" class="icon32"><br/></div>
-  <h2>Rework HipChat Plugin Settings</h2>
+  <h2>HipChat For WordPress Plugin Settings</h2>
 
-  <p>This plugin will send a HipChat message whenever a new blog entry is published. For support, please contact <a href="http://www.hipchat.com/contact">HipChat</a>.</p>
+  <p>This plugin will send a HipChat message whenever a new content is published.</p>
 
   <?php if ($updated): ?>
   <div class="updated"><p><?php echo $updated ?></p></div>
