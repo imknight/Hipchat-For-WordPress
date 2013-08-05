@@ -125,18 +125,21 @@ class Rework_Hipchat {
 		$selected = trim($_POST['post_types_notify']);
 		$selectedroom = trim($_POST['post_types_notify_room']);
 		
-		// make sure token is valid and room exists
-		$hc = new HipChat($auth_token);
-		$successful = false;
-		try {
-		  $r = $hc->message_room($room, get_bloginfo('name'), "Plugin enabled successfully.");
-		  if ($r) {
-		    $successful = true;
-		  }
-		} catch (HipChat_Exception $e) {
-		  // token must have failed
+		$auth_token = get_option('hipchat_auth_token');
 		
-
+		if(isset($auth_token)){
+		// make sure token is valid and room exists
+			$hc = new HipChat($auth_token);
+			$successful = false;
+			try {
+			  $r = $hc->message_room($room, get_bloginfo('name'), "Plugin enabled successfully.");
+			  if ($r) {
+			    $successful = true;
+			  }
+			} catch (HipChat_Exception $e) {
+			  // token must have failed	
+		}
+			$successful = true;
 		}
 			if (!$successful) {
 				$error = 'Bad auth token or room name.';
@@ -152,8 +155,7 @@ class Rework_Hipchat {
 				$updated = 'Settings saved! Auth token is valid and room exists.';
 			}
 		}else{
-
-    		$auth_token = get_option('hipchat_auth_token');
+			$auth_token = get_option('hipchat_auth_token');
     		$room = get_option('hipchat_room');
     		$selected = get_option('hipchat_post_type');
     		$selectedroom = get_option('hipchat_post_type_room');
