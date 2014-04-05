@@ -23,9 +23,13 @@ class Rework_Hipchat {
 		//add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		//add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
-		add_action('new_to_publish', array($this,'publish_notification'));
-		add_action('draft_to_publish', array($this,'publish_notification'));
-
+		$status = get_option('hipchat_notify_status') ? get_option('hipchat_notify_status') : 'all' ;
+		if ($status=='all'){
+			add_action( 'transition_post_status',array($this,'publish_all_notification'),10,3);
+		}else{
+			add_action('new_to_publish', array($this,'publish_notification'));
+			add_action('draft_to_publish', array($this,'publish_notification'));			
+		}
 	}
 
 	public static function get_instance() {
@@ -124,7 +128,7 @@ class Rework_Hipchat {
 		$auth_token = esc_attr(trim($_POST['auth_token']));
 		$room = esc_attr(($_POST['room']));
 		$status = esc_attr(($_POST['notify_status']));
-		
+
 		$notify = array();
 
 		//remove the last item since is use for clone purpose only
@@ -185,7 +189,12 @@ class Rework_Hipchat {
 		include_once( 'views/admin.php' );
 	}
 
-	public function publish_notification($post){
+	public function publish_all_notification($new_status, $old_status, $post){
+		$status = ' - '.$old_status.' to '.$new_status;
+		$this->publish_notification($post,$status);
+	}
+
+	public function publish_notification($post,$status=false){
 		$notify = get_option('hipchat_notify');
 		$ping = false;
 		foreach ($notify['post_type'] as $i => $type){
@@ -208,6 +217,7 @@ class Rework_Hipchat {
 			$room = get_option('hipchat_room');
 
 			$message = str_replace('%title%',$post->post_title,$msg);
+			if ($status) $message .= $status;
 			$hc = new HipChat($auth_token);
 			$r = $hc->message_room($room, get_bloginfo('name'), $message);
 
