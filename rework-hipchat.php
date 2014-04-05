@@ -3,7 +3,7 @@
 Plugin Name: Hipchat For WordPress
 Plugin URI: 
 Description: Send a message to a HipChat room whenever a content is published.
-Version: 1.0.1
+Version: 1.0.2
 Author: knight
 Author URI: http://imknight.net
 License: GNU GPL v2

@@ -1,7 +1,7 @@
 <?php
 class Rework_Hipchat {
 
-	protected $version = '1.0.0';
+	protected $version = '1.0.2';
 	protected $plugin_slug = 'rework-hipchat';
 	protected $title = 'HipChat For WordPress';
 	protected static $instance = null;
