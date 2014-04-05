@@ -40,12 +40,14 @@ class Rework_Hipchat {
 
 	public static function activate( $network_wide ) {
 		add_option('hipchat_auth_token');
+		add_option('hipchat_notify_status','all');
 	}
 
 	public static function deactivate( $network_wide ) {
 		delete_option('hipchat_auth_token');
 		delete_option('hipchat_room');
 		delete_option('hipchat_notify');
+		delete_option('hipchat_notify_status');
 	}
 
 	public function load_plugin_textdomain() {
@@ -121,7 +123,8 @@ class Rework_Hipchat {
 		if ($_POST) {
 		$auth_token = esc_attr(trim($_POST['auth_token']));
 		$room = esc_attr(($_POST['room']));
-
+		$status = esc_attr(($_POST['notify_status']));
+		
 		$notify = array();
 
 		//remove the last item since is use for clone purpose only
@@ -162,12 +165,14 @@ class Rework_Hipchat {
 				update_option('hipchat_auth_token', $auth_token);
 				update_option('hipchat_room', $room);
 				update_option('hipchat_notify', $notify);
+				update_option('hipchat_notify_status', $status);
 				$updated = 'Settings saved! Auth token is valid and room exists.';
 			}
 		}else{
 			$auth_token = get_option('hipchat_auth_token');
     		$room = get_option('hipchat_room');
     		$notify = get_option('hipchat_notify');
+    		$status = get_option('hipchat_notify_status');
 		}
 
 		$args=array(

@@ -45,6 +45,18 @@
           </span>
         </td>
       </tr>
+      <tr>
+        <th>
+          <label for="notify_status">Notify When</label>
+        </th>
+        <td>
+          <label><input type="radio" name="notify_status" value="all" <?php checked( $status, 'all') ?>> All Status</label>
+          <label><input type="radio" name="notify_status" value="publish" <?php checked( $status, 'publish') ?>> Publish Only</label>
+          <span class="description">
+            Send notify when every status changes or only when publishing only
+          </span>
+        </td>
+      </tr>
     </table>
 <br>
 <?php if ( !empty( $auth_token ) ) :?>
