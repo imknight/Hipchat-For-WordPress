@@ -172,7 +172,7 @@ class Rework_Hipchat {
 
 		$args=array(
 		'public'   => true,
-		'_builtin' => false
+		//'_builtin' => false
 		); 
 		$output = 'names'; // names or objects, note names is the default
 		$operator = 'and'; // 'and' or 'or'
